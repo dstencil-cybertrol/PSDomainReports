@@ -31,7 +31,7 @@ $results | Export-Csv -Path  C:\temp\softwareinstalled.csv -Encoding Unicode
 
 
 # Create HTML page
-$csv = Import-Csv -Path $csvFile
+$csv = Import-Csv -Path C:\temp\softwareinstalled.csv
 $style = "<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm' crossorigin='anonymous'>"
 $search = "<div class='container'><div class='row'><div class='col-sm-6'><input type='text' class='form-control' id='search-box' placeholder='Search...' onkeyup='searchTable()'/> </div></div></div>"
 $checkbox = "<input type='checkbox' id='enabled' onclick='filterEnabled()'>Show Enabled Users Only"
