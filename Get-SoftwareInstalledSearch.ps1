@@ -1,4 +1,4 @@
-$comp= gc "C:\temp\servers.txt"
+$comp= gc "servers.txt"
 $infoObject=@()
 $results=@()
 $dateString = (Get-Date).ToString("yyyy-MM-dd")
