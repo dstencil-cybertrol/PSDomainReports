@@ -12,5 +12,5 @@ To Run individual scripts
 files ends up in C:\temp\
 
 
-*Only for Get-SoftwareInstalledSearch.ps1:
-- Edit servers.txt to specify which servers to pull the Get-SoftwareInstalledSearch results from (doesn't pull and run all AD Computers due to time to run script)*
+*Only for Get-SoftwareInstalledSearch.ps1:*
+- Edit servers.txt to specify which servers to pull the Get-SoftwareInstalledSearch results from (doesn't pull and run all AD Computers due to time to run script)
