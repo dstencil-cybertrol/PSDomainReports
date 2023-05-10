@@ -1,7 +1,7 @@
 # PSDomainReports
 Active Directory Domain HTML Reports
 
-Edit servers.txt to specify which servers to pull the Get-SoftwareInstalledSearch results from.
+Edit servers.txt to specify which servers to pull the Get-SoftwareInstalledSearch results from (doesn't pull and run all AD Computers due to time to run script)
 
 To Run All scripts
 ```
