@@ -15,6 +15,9 @@ if ($p -eq $true)
 {
 
     $csvproduct=Get-WmiObject -ComputerName $co -ClassName Win32_product 
+    #examples to try if fail 
+    #$csvproduct=Get-WmiObject -ComputerName $co -Credential Get-Credential -ClassName Win32_product 
+    #$csvproduct = Get-WmiObject -ComputerName $co -Namespace "root\cimv2\applications" -Class "Win32_product"
     $results += $csvproduct | Select-Object -Property @{name='User';expression={$co}}, Name, Description,Vendor,Version,HelpLink,HelpTelephone
     Write-Host "$co Finished Successfully"
 }
