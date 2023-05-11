@@ -6,29 +6,32 @@ $dateString = (Get-Date).ToString("yyyy-MM-dd")
 
 foreach($co in $comp)
 {
-$co
+    $co
 
-$infoObject = New-Object PSObject
-$p=Test-Connection -ComputerName $co -BufferSize 16  -Count 1 -Quiet
-$p
-if ($p -eq $true)
-{
+    $infoObject = New-Object PSObject
+    $p=Test-Connection -ComputerName $co -BufferSize 16  -Count 1 -Quiet
+    $p
+    if ($p -eq $true)
+    {
 
-    $csvproduct=Get-WmiObject -ComputerName $co -ClassName Win32_product 
-    #examples to try if fail 
+        $csvproduct = Invoke-Command -ComputerName $co -ScriptBlock {
+            Get-ItemProperty -Path 'HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\*' |
+            Select-Object -Property @{name='User';expression={$env:COMPUTERNAME}}, DisplayName, DisplayVersion, Publisher, InstallDate, UninstallString, HelpLink, HelpTelephone, PSChildName
+        }
+
+        $results += $csvproduct | Select-Object -Property @{name='User';expression={$co}}, DisplayName, DisplayVersion, Publisher, InstallDate, HelpLink, HelpTelephone, PSChildName, @{Name='Product ID'; Expression={$_.PSChildName -replace '{|}'}} 
+        Write-Host "$co Finished Successfully"
+    }
+    #not recommended to use in production
+    #$csvproduct=Get-WmiObject -ComputerName $co -ClassName Win32_product 
     #$csvproduct=Get-WmiObject -ComputerName $co -Credential Get-Credential -ClassName Win32_product 
     #$csvproduct = Get-WmiObject -ComputerName $co -Namespace "root\cimv2\applications" -Class "Win32_product"
     #$csvproduct = Get-WmiObject -ComputerName $co -Credential DOMAIN\User -Namespace "root\cimv2\applications" -Class "Win32_product"
-    $results += $csvproduct | Select-Object -Property @{name='User';expression={$co}}, Name, Description,Vendor,Version,HelpLink,HelpTelephone
-    Write-Host "$co Finished Successfully"
-}
-
-else
-{
-
-Write-Host $co + "not found"
-
-}
+    #$results += $csvproduct | Select-Object -Property @{name='User';expression={$co}}, Name, Description,Vendor,Version,HelpLink,HelpTelephone
+    else
+    {
+        Write-Host $co "not found"
+    }
 }
 
 $results | Export-Csv -Path  C:\temp\softwareinstalled.csv -Encoding Unicode
