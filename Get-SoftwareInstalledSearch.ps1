@@ -1,6 +1,6 @@
 $comp= gc "servers.txt"
 #To test on local system use below instead 
-# $comp= "test-dc-01"
+# $comp= hostname
 $infoObject=@()
 $results=@()
 $dateString = (Get-Date).ToString("yyyy-MM-dd")
